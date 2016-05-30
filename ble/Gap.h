@@ -1141,6 +1141,17 @@ public:
     }
 
     /**
+     * Get a reference to the scan response.
+     *
+     * @return  Read back scan response data.
+     *
+     * @note Useful for storing and restoring payload.
+     */
+    const GapAdvertisingData &getScanResponse(void) const {
+        return _scanResponse;
+    }
+
+    /**
      * Accumulate a variable length byte-stream as an AD structure in the
      * scanResponse payload.
      *

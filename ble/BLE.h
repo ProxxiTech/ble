@@ -517,6 +517,14 @@ public:
     }
 
     /**
+     * @return  Read back advertising data. Useful for storing and
+     *          restoring payload.
+     */
+    const GapAdvertisingData &getScanResponse(void) const {
+        return gap().getScanResponse();
+    }
+
+    /**
      * Reset any advertising payload prepared from prior calls to
      * accumulateAdvertisingPayload(). This automatically propagates the re-
      * initialized advertising payload to the underlying stack.

@@ -164,7 +164,7 @@ public:
         return receiveBuffer[receiveBufferIndex++];
     }
 
-protected:
+//protected:
     /**
      * This callback allows the UART service to receive updates to the
      * txCharacteristic. The application should forward the call to this
