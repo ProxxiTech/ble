@@ -22,9 +22,15 @@ const uint8_t              DFUServiceBaseUUID[] = {
     0x00, 0x00, 0x00, 0x00, 0x12, 0x12, 0xEF, 0xDE,
     0x15, 0x23, 0x78, 0x5F, 0xEA, 0xBC, 0xD1, 0x23,
 };
-const uint16_t             DFUServiceShortUUID                      = 0x1530;
-const uint16_t             DFUServiceControlCharacteristicShortUUID = 0x1531;
-const uint16_t             DFUServicePacketCharacteristicShortUUID  = 0x1532;
+const uint16_t             DFUServiceShortUUID                       = 0x1530;
+const uint16_t             DFUServiceControlCharacteristicShortUUID  = 0x1531;
+const uint16_t             DFUServicePacketCharacteristicShortUUID   = 0x1532;
+const uint16_t             DFUServiceRevisionCharacteristicShortUUID = 0x1534;
+
+// DFU version = 0.1 to specify that the application supports buttonless updates
+const uint16_t			   DFUServiceRevisionMajor = 0x00;
+const uint16_t			   DFUServiceRevisionMinor = 0x01;
+const uint16_t			   DFUServiceRevision = (DFUServiceRevisionMajor << 8) | DFUServiceRevisionMinor;
 
 const uint8_t              DFUServiceUUID[] = {
     0x00, 0x00, (uint8_t)(DFUServiceShortUUID >> 8), (uint8_t)(DFUServiceShortUUID & 0xFF), 0x12, 0x12, 0xEF, 0xDE,
@@ -36,6 +42,10 @@ const uint8_t              DFUServiceControlCharacteristicUUID[] = {
 };
 const uint8_t              DFUServicePacketCharacteristicUUID[] = {
     0x00, 0x00, (uint8_t)(DFUServicePacketCharacteristicShortUUID >> 8), (uint8_t)(DFUServicePacketCharacteristicShortUUID & 0xFF), 0x12, 0x12, 0xEF, 0xDE,
+    0x15, 0x23, 0x78, 0x5F, 0xEA, 0xBC, 0xD1, 0x23,
+};
+const uint8_t              DFUServiceRevisionCharacteristicUUID[] = {
+    0x00, 0x00, (uint8_t)(DFUServiceRevisionCharacteristicShortUUID >> 8), (uint8_t)(DFUServiceRevisionCharacteristicShortUUID & 0xFF), 0x12, 0x12, 0xEF, 0xDE,
     0x15, 0x23, 0x78, 0x5F, 0xEA, 0xBC, 0xD1, 0x23,
 };
 

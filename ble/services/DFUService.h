@@ -33,6 +33,9 @@ extern const uint16_t DFUServiceControlCharacteristicShortUUID;
 extern const uint8_t  DFUServiceUUID[];
 extern const uint8_t  DFUServiceControlCharacteristicUUID[];
 extern const uint8_t  DFUServicePacketCharacteristicUUID[];
+extern const uint8_t  DFUServiceRevisionCharacteristicUUID[];
+
+extern const uint16_t	DFUServiceRevision;
 
 /**
 * @class DFUService
@@ -61,6 +64,7 @@ public:
         controlPoint(DFUServiceControlCharacteristicUUID, controlBytes, GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY),
         packet(DFUServicePacketCharacteristicUUID, packetBytes, SIZEOF_PACKET_BYTES, SIZEOF_PACKET_BYTES,
                GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_WRITE_WITHOUT_RESPONSE),
+	    revision(DFUServiceRevisionCharacteristicUUID, const_cast<uint16_t*>(&DFUServiceRevision), GattCharacteristic::BLE_GATT_CHAR_PROPERTIES_NOTIFY),
         controlBytes(),
         packetBytes() {
         static bool serviceAdded = false; /* We only add the DFU service once. */
@@ -73,7 +77,7 @@ public:
         controlBytes[0] = 0xFF;
         controlBytes[1] = 0xFF;
 
-        GattCharacteristic *dfuChars[] = {&controlPoint, &packet};
+        GattCharacteristic *dfuChars[] = {&controlPoint, &packet, &revision};
         GattService         dfuService(DFUServiceUUID, dfuChars, sizeof(dfuChars) / sizeof(GattCharacteristic *));
 
         ble.addService(dfuService);
@@ -135,6 +139,8 @@ protected:
       *  FOTA clients might get confused, because service definitions change after
       *  handing control over to the bootloader. */
     GattCharacteristic  packet;
+
+    ReadOnlyGattCharacteristic<uint16_t> revision;
 
     uint8_t             controlBytes[SIZEOF_CONTROL_BYTES];
     uint8_t             packetBytes[SIZEOF_PACKET_BYTES];
