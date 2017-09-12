@@ -122,7 +122,15 @@ public:
                 if ((sendBufferIndex == BLE_UART_SERVICE_MAX_DATA_LEN) ||
                     // (sendBuffer[sendBufferIndex - 1] == '\r')          ||
                     (sendBuffer[sendBufferIndex - 1] == '\n')) {
-                    ble.gattServer().write(getRXCharacteristicHandle(), static_cast<const uint8_t *>(sendBuffer), sendBufferIndex);
+                    bool anyDataSent = false;
+                    ble_error_t didSendResult = BLE_ERROR_NONE;
+                    while ((didSendResult == BLE_ERROR_NONE) && ble.getGapState().connected && !anyDataSent) {
+                        didSendResult = ble.gattServer().write(getRXCharacteristicHandle(), static_cast<const uint8_t *>(sendBuffer),
+                                               sendBufferIndex);
+                        if (didSendResult == BLE_ERROR_NONE) {
+                            anyDataSent = true;
+                        }
+                    }
                     sendBufferIndex = 0;
                 }
             }
